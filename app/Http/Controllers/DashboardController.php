@@ -19,6 +19,7 @@ class DashboardController extends Controller
         $produk = Produk::count();
         $supplier = Supplier::count();
         $member = Member::count();
+        $penjualan = Penjualan::count();
 
         $tanggal_awal = date('Y-m-01');
         $tanggal_akhir = date('Y-m-d');
@@ -42,7 +43,7 @@ class DashboardController extends Controller
         $tanggal_awal = date('Y-m-01');
 
         if (auth()->user()->level == 1) {
-            return view('admin.dashboard', compact('kategori', 'produk', 'supplier', 'member', 'tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan'));
+            return view('admin.dashboard', compact('kategori', 'produk', 'supplier', 'member', 'tanggal_awal', 'tanggal_akhir', 'data_tanggal', 'data_pendapatan', 'penjualan'));
         } else {
             return view('kasir.dashboard');
         }

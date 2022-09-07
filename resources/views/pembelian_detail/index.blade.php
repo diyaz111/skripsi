@@ -107,12 +107,6 @@
                                 </div>
                             </div>
                             <div class="form-group row">
-                                <label for="diskon" class="col-lg-2 control-label">Diskon</label>
-                                <div class="col-lg-8">
-                                    <input type="number" name="diskon" id="diskon" class="form-control" value="{{ $diskon }}">
-                                </div>
-                            </div>
-                            <div class="form-group row">
                                 <label for="bayar" class="col-lg-2 control-label">Bayar</label>
                                 <div class="col-lg-8">
                                     <input type="text" id="bayarrp" class="form-control">
@@ -152,7 +146,7 @@
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
                 {data: 'kode_produk'},
                 {data: 'nama_produk'},
-                {data: 'harga_beli'},
+                {data: 'harga_jual'},
                 {data: 'jumlah'},
                 {data: 'subtotal'},
                 {data: 'aksi', searchable: false, sortable: false},
@@ -161,9 +155,6 @@
             bSort: false,
             paginate: false
         })
-        .on('draw.dt', function () {
-            loadForm($('#diskon').val());
-        });
         table2 = $('.table-produk').DataTable();
 
         $(document).on('input', '.quantity', function () {
@@ -197,13 +188,6 @@
                 });
         });
 
-        $(document).on('input', '#diskon', function () {
-            if ($(this).val() == "") {
-                $(this).val(0).select();
-            }
-
-            loadForm($(this).val());
-        });
 
         $('.btn-simpan').on('click', function () {
             $('.form-pembelian').submit();

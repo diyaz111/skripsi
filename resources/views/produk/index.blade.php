@@ -32,11 +32,8 @@
                             <th>Kode</th>
                             <th>Nama</th>
                             <th>Kategori</th>
-                            <th>Merk</th>
-                            <th>Harga Beli</th>
+                            <th>Deskripsi</th>
                             <th>Harga Jual</th>
-                            <th>Diskon</th>
-                            <th>Stok</th>
                             <th width="15%"><i class="fa fa-cog"></i></th>
                         </thead>
                     </table>
@@ -69,10 +66,7 @@
                 {data: 'nama_produk'},
                 {data: 'nama_kategori'},
                 {data: 'merk'},
-                {data: 'harga_beli'},
                 {data: 'harga_jual'},
-                {data: 'diskon'},
-                {data: 'stok'},
                 {data: 'aksi', searchable: false, sortable: false},
             ]
         });
@@ -120,10 +114,7 @@
                 $('#modal-form [name=nama_produk]').val(response.nama_produk);
                 $('#modal-form [name=id_kategori]').val(response.id_kategori);
                 $('#modal-form [name=merk]').val(response.merk);
-                $('#modal-form [name=harga_beli]').val(response.harga_beli);
                 $('#modal-form [name=harga_jual]').val(response.harga_jual);
-                $('#modal-form [name=diskon]').val(response.diskon);
-                $('#modal-form [name=stok]').val(response.stok);
             })
             .fail((errors) => {
                 alert('Tidak dapat menampilkan data');

@@ -40,10 +40,7 @@
             <td>Tanggal</td>
             <td>: {{ tanggal_indonesia(date('Y-m-d')) }}</td>
         </tr>
-        <tr>
-            <td>Kode Member</td>
-            <td>: {{ $penjualan->member->kode_member ?? '' }}</td>
-        </tr>
+        
     </table>
 
     <table class="data" width="100%">
@@ -72,26 +69,7 @@
             @endforeach
         </tbody>
         <tfoot>
-            <tr>
-                <td colspan="6" class="text-right"><b>Total Harga</b></td>
-                <td class="text-right"><b>{{ format_uang($penjualan->total_harga) }}</b></td>
-            </tr>
-            <tr>
-                <td colspan="6" class="text-right"><b>Diskon</b></td>
-                <td class="text-right"><b>{{ format_uang($penjualan->diskon) }}</b></td>
-            </tr>
-            <tr>
-                <td colspan="6" class="text-right"><b>Total Bayar</b></td>
-                <td class="text-right"><b>{{ format_uang($penjualan->bayar) }}</b></td>
-            </tr>
-            <tr>
-                <td colspan="6" class="text-right"><b>Diterima</b></td>
-                <td class="text-right"><b>{{ format_uang($penjualan->diterima) }}</b></td>
-            </tr>
-            <tr>
-                <td colspan="6" class="text-right"><b>Kembali</b></td>
-                <td class="text-right"><b>{{ format_uang($penjualan->diterima - $penjualan->bayar) }}</b></td>
-            </tr>
+          
         </tfoot>
     </table>
 

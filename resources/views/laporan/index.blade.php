@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Laporan Pendapatan {{ tanggal_indonesia($tanggalAwal, false) }} s/d {{ tanggal_indonesia($tanggalAkhir, false) }}
+    Laporan Menu {{ tanggal_indonesia($tanggalAwal, false) }} s/d {{ tanggal_indonesia($tanggalAkhir, false) }}
 @endsection
 
 @push('css')
@@ -14,6 +14,7 @@
 @endsection
 
 @section('content')
+
 <div class="row">
     <div class="col-lg-12">
         <div class="box">
@@ -26,10 +27,7 @@
                     <thead>
                         <th width="5%">No</th>
                         <th>Tanggal</th>
-                        <th>Penjualan</th>
-                        <th>Pembelian</th>
-                        <th>Pengeluaran</th>
-                        <th>Pendapatan</th>
+                        <th>Nama Makanan</th>
                     </thead>
                 </table>
             </div>
@@ -57,10 +55,7 @@
             columns: [
                 {data: 'DT_RowIndex', searchable: false, sortable: false},
                 {data: 'tanggal'},
-                {data: 'penjualan'},
-                {data: 'pembelian'},
-                {data: 'pengeluaran'},
-                {data: 'pendapatan'}
+                {data: 'detail'}
             ],
             dom: 'Brt',
             bSort: false,

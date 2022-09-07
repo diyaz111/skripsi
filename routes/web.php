@@ -9,6 +9,7 @@ use App\Http\Controllers\{
     PengeluaranController,
     PembelianController,
     PembelianDetailController,
+    PemesananController,
     PenjualanController,
     PenjualanDetailController,
     SettingController,
@@ -100,4 +101,5 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('/profil', [UserController::class, 'profil'])->name('user.profil');
         Route::post('/profil', [UserController::class, 'updateProfil'])->name('user.update_profil');
     });
+    Route::get('/pemesanan', [PemesananController::class, 'index']);
 });

@@ -15,14 +15,13 @@ class PenjualanDetailController extends Controller
     {
         $produk = Produk::orderBy('nama_produk')->get();
         $member = Member::orderBy('nama')->get();
-        $diskon = Setting::first()->diskon ?? 0;
 
         // Cek apakah ada transaksi yang sedang berjalan
         if ($id_penjualan = session('id_penjualan')) {
             $penjualan = Penjualan::find($id_penjualan);
             $memberSelected = $penjualan->member ?? new Member();
 
-            return view('penjualan_detail.index', compact('produk', 'member', 'diskon', 'id_penjualan', 'penjualan', 'memberSelected'));
+            return view('penjualan_detail.index', compact('produk', 'member', 'id_penjualan', 'penjualan', 'memberSelected'));
         } else {
             if (auth()->user()->level == 1) {
                 return redirect()->route('transaksi.baru');
@@ -48,14 +47,13 @@ class PenjualanDetailController extends Controller
             $row['nama_produk'] = $item->produk['nama_produk'];
             $row['harga_jual']  = 'Rp. '. format_uang($item->harga_jual);
             $row['jumlah']      = '<input type="number" class="form-control input-sm quantity" data-id="'. $item->id_penjualan_detail .'" value="'. $item->jumlah .'">';
-            $row['diskon']      = $item->diskon . '%';
             $row['subtotal']    = 'Rp. '. format_uang($item->subtotal);
             $row['aksi']        = '<div class="btn-group">
                                     <button onclick="deleteData(`'. route('transaksi.destroy', $item->id_penjualan_detail) .'`)" class="btn btn-xs btn-danger btn-flat"><i class="fa fa-trash"></i></button>
                                 </div>';
             $data[] = $row;
 
-            $total += $item->harga_jual * $item->jumlah - (($item->diskon * $item->jumlah) / 100 * $item->harga_jual);;
+            $total += $item->harga_jual * $item->jumlah;
             $total_item += $item->jumlah;
         }
         $data[] = [
@@ -65,7 +63,6 @@ class PenjualanDetailController extends Controller
             'nama_produk' => '',
             'harga_jual'  => '',
             'jumlah'      => '',
-            'diskon'      => '',
             'subtotal'    => '',
             'aksi'        => '',
         ];
@@ -89,8 +86,7 @@ class PenjualanDetailController extends Controller
         $detail->id_produk = $produk->id_produk;
         $detail->harga_jual = $produk->harga_jual;
         $detail->jumlah = 1;
-        $detail->diskon = $produk->diskon;
-        $detail->subtotal = $produk->harga_jual - ($produk->diskon / 100 * $produk->harga_jual);;
+        $detail->subtotal = $produk->harga_jual;
         $detail->save();
 
         return response()->json('Data berhasil disimpan', 200);
@@ -100,7 +96,7 @@ class PenjualanDetailController extends Controller
     {
         $detail = PenjualanDetail::find($id);
         $detail->jumlah = $request->jumlah;
-        $detail->subtotal = $detail->harga_jual * $request->jumlah - (($detail->diskon * $request->jumlah) / 100 * $detail->harga_jual);;
+        $detail->subtotal = $detail->harga_jual * $request->jumlah;
         $detail->update();
     }
 
@@ -112,9 +108,9 @@ class PenjualanDetailController extends Controller
         return response(null, 204);
     }
 
-    public function loadForm($diskon = 0, $total = 0, $diterima = 0)
+    public function loadForm($total = 0, $diterima = 0)
     {
-        $bayar   = $total - ($diskon / 100 * $total);
+        $bayar   = $total;
         $kembali = ($diterima != 0) ? $diterima - $bayar : 0;
         $data    = [
             'totalrp' => format_uang($total),

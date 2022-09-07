@@ -39,9 +39,6 @@ class PembelianController extends Controller
             ->addColumn('supplier', function ($pembelian) {
                 return $pembelian->supplier->nama;
             })
-            ->editColumn('diskon', function ($pembelian) {
-                return $pembelian->diskon . '%';
-            })
             ->addColumn('aksi', function ($pembelian) {
                 return '
                 <div class="btn-group">
@@ -60,7 +57,6 @@ class PembelianController extends Controller
         $pembelian->id_supplier = $id;
         $pembelian->total_item  = 0;
         $pembelian->total_harga = 0;
-        $pembelian->diskon      = 0;
         $pembelian->bayar       = 0;
         $pembelian->save();
 
@@ -75,14 +71,13 @@ class PembelianController extends Controller
         $pembelian = Pembelian::findOrFail($request->id_pembelian);
         $pembelian->total_item = $request->total_item;
         $pembelian->total_harga = $request->total;
-        $pembelian->diskon = $request->diskon;
         $pembelian->bayar = $request->bayar;
         $pembelian->update();
 
         $detail = PembelianDetail::where('id_pembelian', $pembelian->id_pembelian)->get();
         foreach ($detail as $item) {
             $produk = Produk::find($item->id_produk);
-            $produk->stok += $item->jumlah;
+         
             $produk->update();
         }
 
@@ -102,8 +97,8 @@ class PembelianController extends Controller
             ->addColumn('nama_produk', function ($detail) {
                 return $detail->produk->nama_produk;
             })
-            ->addColumn('harga_beli', function ($detail) {
-                return 'Rp. '. format_uang($detail->harga_beli);
+            ->addColumn('harga_jual', function ($detail) {
+                return 'Rp. '. format_uang($detail->harga_jual);
             })
             ->addColumn('jumlah', function ($detail) {
                 return format_uang($detail->jumlah);
@@ -122,7 +117,7 @@ class PembelianController extends Controller
         foreach ($detail as $item) {
             $produk = Produk::find($item->id_produk);
             if ($produk) {
-                $produk->stok -= $item->jumlah;
+             
                 $produk->update();
             }
             $item->delete();

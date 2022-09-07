@@ -1633,7 +1633,7 @@
  * ------------
  */
 .skin-purple-light .main-header .navbar {
-  background-color: #605ca8;
+  background-color: #f80d0d;
 }
 .skin-purple-light .main-header .navbar .nav > li > a {
   color: #ffffff;
@@ -1673,7 +1673,7 @@
   }
 }
 .skin-purple-light .main-header .logo {
-  background-color: #605ca8;
+  background-color: #09e984;
   color: #ffffff;
   border-bottom: 0 solid transparent;
 }
