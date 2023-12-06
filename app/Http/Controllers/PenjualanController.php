@@ -30,7 +30,7 @@ class PenjualanController extends Controller
                 return 'Rp. '. format_uang($penjualan->total_harga);
             })
             ->addColumn('bayar', function ($penjualan) {
-                return 'Rp. '. format_uang($penjualan->bayar);
+                return 'Rp. '. format_uang($penjualan->total_harga);
             })
             ->addColumn('tanggal', function ($penjualan) {
                 return tanggal_indonesia($penjualan->created_at, false);
@@ -80,7 +80,7 @@ class PenjualanController extends Controller
             $item->update();
 
             $produk = Produk::find($item->id_produk);
-         
+
             $produk->update();
         }
 
@@ -120,7 +120,7 @@ class PenjualanController extends Controller
         foreach ($detail as $item) {
             $produk = Produk::find($item->id_produk);
             if ($produk) {
-                
+
                 $produk->update();
             }
 
@@ -149,7 +149,7 @@ class PenjualanController extends Controller
         $detail = PenjualanDetail::with('produk')
             ->where('id_penjualan', session('id_penjualan'))
             ->get();
-        
+
         return view('penjualan.nota_kecil', compact('setting', 'penjualan', 'detail'));
     }
 

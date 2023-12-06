@@ -11,7 +11,7 @@
         @endphp
         <span class="logo-mini">{{ $word }}</span>
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>{{ $setting->nama_perusahaan }}</b></span>
+        <span class="logo-lg"><b style="font-family:cursive;">{{ $setting->nama_perusahaan }}</b></span>
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">

@@ -9,6 +9,7 @@ use App\Models\Pengeluaran;
 use App\Models\Penjualan;
 use App\Models\Produk;
 use App\Models\Supplier;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class DashboardController extends Controller
@@ -20,6 +21,7 @@ class DashboardController extends Controller
         $supplier = Supplier::count();
         $member = Member::count();
         $penjualan = Penjualan::count();
+        $user = User::all();
 
         $tanggal_awal = date('Y-m-01');
         $tanggal_akhir = date('Y-m-d');
@@ -30,11 +32,12 @@ class DashboardController extends Controller
         while (strtotime($tanggal_awal) <= strtotime($tanggal_akhir)) {
             $data_tanggal[] = (int) substr($tanggal_awal, 8, 2);
 
-            $total_penjualan = Penjualan::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('bayar');
+            $penjualanUser = Penjualan::where('created_at', 'LIKE', "%$tanggal_awal%")->count();
+            $total_penjualan = Penjualan::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('total_harga');
             $total_pembelian = Pembelian::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('bayar');
             $total_pengeluaran = Pengeluaran::where('created_at', 'LIKE', "%$tanggal_awal%")->sum('nominal');
 
-            $pendapatan = $total_penjualan - $total_pembelian - $total_pengeluaran;
+            $pendapatan = $total_penjualan;
             $data_pendapatan[] += $pendapatan;
 
             $tanggal_awal = date('Y-m-d', strtotime("+1 day", strtotime($tanggal_awal)));
